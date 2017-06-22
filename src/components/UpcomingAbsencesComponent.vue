@@ -1,25 +1,25 @@
 <template>
   <div id="upcoming-absences">
     <div class="heading">Upcoming Absences</div>
-    <!--<div v-for="day in upcomingAbsences" class="card">
+    <div v-for="day in upcomingAbsences" class="card" :key="day.AbsenceID">
       <div class="uc-date">{{formatDateForDisplay(day.AbsenceDate)}}</div>
-      <div v-for="a in day.Absences">
+      <div v-for="a in day.Absences" :key="a.AbsenceID">
         <div class="uc-details">
           {{a.FirstName}} {{a.Surname}}
           <div class="uc-reason">({{a.Reason}}) {{a.HalfDay ? "HalfDay" : ""}} <i>{{a.Notes}}</i></div>
         </div>
 
       </div>
-    </div>-->
+    </div>
    
-    <absence-card :absences="upcomingAbsences" groupBy="date"></absence-card>
+    <!--<absence-card :absences="upcomingAbsences" groupBy="date"></absence-card>-->
 
   </div>
 </template>
 
 <script>
 import Constants from '@/components/helpers/Constants'
-import AbsenceCard from '@/components/AbsenceCardComponent'
+// import AbsenceCard from '@/components/AbsenceCardComponent'
 import router from '../router/'
 import Utilities from '@/components/helpers/Utilities'
 import Vue from 'vue';
@@ -28,9 +28,9 @@ Vue.use(VueBus);
 
 export default {
   name: 'upcoming-absences',
-  components:{
-    AbsenceCard
-  },
+  // components:{
+  //   AbsenceCard
+  // },
   data () {
     return {
       upcomingAbsences:[],
@@ -47,15 +47,15 @@ export default {
       axios.get(Constants.api + 'absences/GetAbsences?from=' + vm.formatDateForApi(today) + '&to=' + vm.formatDateForApi(end))
       .then((res) => {
         let data = res.data
-        vm.upcomingAbsences = data
-        // const dates = [...new Set(data.map(item => item.AbsenceDate))];
-        // dates.sort()
-        // .forEach(item => {
-        //   let obj = {}
-        //   obj.AbsenceDate = item
-        //   obj.Absences = data.filter(absence => absence.AbsenceDate === item)
-        //   vm.upcomingAbsences.push(obj)
-        // })
+        const dates = [...new Set(data.map(item => item.AbsenceDate))];
+        dates.sort()
+        .forEach(item => {
+          let obj = {}
+          obj.AbsenceDate = item
+          obj.Absences = data.filter(absence => absence.AbsenceDate === item)
+          vm.upcomingAbsences.push(obj)
+          console.log('vm.upcomingAbsences',vm.upcomingAbsences)
+        })
       });
     },
     formatDateForApi:function(date){
@@ -77,7 +77,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-/*.uc-date {
+.uc-date {
   font-size: 13px;
   font-weight:bold;
   margin-bottom:3px;
@@ -91,5 +91,5 @@ export default {
 .uc-reason {
   display:inline;
   float:right;
-}*/
+}
 </style>
