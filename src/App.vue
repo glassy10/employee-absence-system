@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 import EasMenu from '@/components/MenuComponent'
 export default {
   name: 'app',
@@ -59,10 +60,6 @@ export default {
 
   }
   html, body {
-    padding: 0;
-    margin: 0;
-    /*height: 100%;
-    width: 100%;*/
     font-family:-apple-system,
                  BlinkMacSystemFont,
                  "Segoe UI",
@@ -74,52 +71,48 @@ export default {
                  "Droid Sans",
                  "Helvetica Neue",
                  sans-serif;
-    font-weight: 400;
-    font-display: optional;
-    color: #444;
     font-size:14px;
-    line-height:1.25em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
    }
 
-  html {
-    /*overflow: hidden;*/
-   }
 
-  body {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-        -ms-flex-align: stretch;
-            align-items: stretch;
-    -webkit-align-content: stretch;
-        -ms-flex-line-pack: stretch;
-            align-content: stretch;
-    background: #f3f3f3;
-   }
+html,
+body{
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:100;
+  margin:auto;
+  padding:0;
+  max-width:100%;
+  max-height:100%;
+  line-height:20px;
+  min-width:320px;
+  min-height:480px;
+  max-width:430px;
+  /*max-height:792px;*/
+  width:100%;
+  /*height:100%;*/
+  /*overflow:hidden;*/
+  /*border-left:1px solid #ced7e6;
+  border-right:1px solid #ced7e6;*/
+
+}
+html{
+  -webkit-text-size-adjust:100%;
+  -ms-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+  display:flex;
+  color:#444;
+  background:#f9f9f9 !important;
+}
 
   .heading {
     padding: 12px 0 20px 0;
     margin: 0;
     font-weight: bold;
-    font-display: optional;
-    color: #444;
     font-size:16px;
     line-height:1.25em;
 
@@ -163,17 +156,19 @@ export default {
     color: white;
     padding:10px;
     border-radius:3px;
-    margin:0 0 10px 0;
+    margin:20px 0 10px 0;
     text-align:center;
+    width: 96%;
+
   }
   .button:hover {
     background-color: rgb(2, 117, 216);
   }
-  @media (max-width: 768px) {
+  /*@media (max-width: 768px) {
     button {
       width: 100%;
     }
-  }
+  }*/
 
   .loader {
     left: 50%;
@@ -234,9 +229,11 @@ export default {
       -webkit-transform: rotate(90deg);
               transform: rotate(90deg); } }
 
+  
+  
   .main {
     padding-top: 10px;
-    margin:0 12px 0 12px;
+    margin:0 10px 0 10px;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
         -ms-flex: 1;
@@ -309,7 +306,7 @@ export default {
      line-height:30px;
      padding: 0 0px 0px 0;
    }
-   @media (min-width: 992px) {
+   /*@media (min-width: 992px) {
      #app {
           width: 800px;
           margin: 0 auto;
@@ -318,5 +315,5 @@ export default {
        margin-left:0;
        margin-right:0;
      }
-   }
+   }*/
 </style>

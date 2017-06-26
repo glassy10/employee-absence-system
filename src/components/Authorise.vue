@@ -21,11 +21,10 @@
 </template>
 
 <script>
-
+import ApiInterface from '@/apiInterface'
 import router from '../router/'
 import Constants from '@/components/helpers/Constants'
 import Utilities from '@/components/helpers/Utilities'
-
 
 export default {
   name: 'Authorise',
@@ -39,41 +38,45 @@ export default {
     }
   },
   methods:{
-    authorise: function(){
+    getUnauthorisedAbsences: function() {
+      let vm = this;
+      //get employees unauthorised absences
+      let fromDate = new Date()
+      const numberOfDaysToAdd = 730;
+      let toDate = new Date();
+      toDate.setDate(toDate.getDate() + numberOfDaysToAdd);
+    
+      ApiInterface.getUnauthorisedAbsences(fromDate,toDate,vm.userName)
+      .then((res) => {
+        console.log('res.data',res.data)
+        vm.unauthorisedAbsences = res.data.sort((a,b) => {
+          return new Date(a.AbsenceDate) - new Date(b.AbsenceDate);
+        })
+      });
+    },
+    authorise: () => {
       let vm = this;
       //return array of authorised dates
+      let authoriser = ''
+      let absenceIds = []
       console.log('vm.unauthorisedAbsences',vm.unauthorisedAbsences)
+
+
+      ApiInterface.authoriseAbsences(absenceIds,authoriser)
+      .then((res)=>{
+        console.log(res.data)
+      })
+
     },
-    formatDateForApi:function(date){
-      return Utilities.formatDateForApi(date)
-    },
-    formatDateForDisplay:function(textDate){
+    formatDateForDisplay: (textDate) => {
       return Utilities.formatDateForDisplay(textDate)
     },
-    formatJsDateForDisplay:function(date) {
+    formatJsDateForDisplay: (date) => {
       return Utilities.formatJsDateForDisplay(date)
     }
-
   },
   created: function(){
-    let vm = this;
-    //get employees unauthorised absences
-    let fromDate = new Date()
-    const numberOfDaysToAdd = 730;
-    let toDate = new Date();
-    toDate.setDate(toDate.getDate() + numberOfDaysToAdd);
-    let query = Constants.api + 'absences/GetUnauthorisedAbsences?' + 
-      'from=' + vm.formatDateForApi(fromDate) +
-      '&to=' + vm.formatDateForApi(toDate) + 
-      '&user=' + vm.userName
-
-    axios.get(query)
-    .then((res) => {
-      vm.unauthorisedAbsences = res.data.sort((a,b) => {
-        return new Date(a.AbsenceDate) - new Date(b.AbsenceDate);
-      })
-    });
-
+    this.getUnauthorisedAbsences()
   }
 }
 </script>

@@ -54,13 +54,10 @@
       <div>
         <label for="halfDayChkBx">
           <span>Half day? </span>
-          <input type="checkbox" id="halfDayChkBx" v-model="newAbsence.halfDay" value="1" style="display:inline-block;"/>
+          <input type="checkbox" id="halfDayChkBx" v-model="newAbsence.halfDay" value="1" style="display:inline-block;">
         </label>
       </div>
-      <br/>
       <button class="button" @click="submit()">Submit</button>
-      <br/><br/>
-      <br/><br/>
     </div>
 
     <div v-if="!showInputs">
@@ -69,20 +66,19 @@
         <p>You've booked the followings days:</p>
         <div v-for="day in daysBooked">{{formatDateForDisplay(day)}}</div>
       </div>
-      <br/>
+      <br>
       <div v-if = "authoriser">
         An email has been sent to {{authoriser.FirstName}} {{authoriser.Surname}}
         regarding authorisation of this holiday booking.
-        <br/>
+        <br>
       </div>
-      <br/>
       <a href="" @click.prevent="showInputs=true">Input another absence?</a>
     </div>
   </div>
 </template>
 
 <script>
-import Constants from '@/components/helpers/Constants'
+import ApiInterface from '@/apiInterface'
 import Utilities from '@/components/helpers/Utilities'
 import router from '../router/'
 import Datepicker from 'vuejs-datepicker'
@@ -115,9 +111,6 @@ export default {
     }
   },
   methods:{
-    formatDateForApi:function(date){
-      return Utilities.formatDateForApi(date)
-    },
     formatDateForDisplay:function(date){
       return Utilities.formatDateForDisplay(date)
     },
@@ -166,13 +159,8 @@ export default {
 
       if (vm.checkForErrors()) return
 
-      //correct dates which are logged hour earlier
-      vm.newAbsence.fromDate = vm.formatDateForApi(vm.newAbsence.fromDate)
-      vm.newAbsence.toDate = vm.formatDateForApi(vm.newAbsence.toDate)
-
-      axios.post(Constants.api + 'absences/SaveAbsence', vm.newAbsence)
+      ApiInterface.saveAbsence(vm.newAbsence)
       .then(res => {
-        //console.log('res.data',res.data)
         vm.authoriser = res.data.authoriser
         vm.daysBooked = res.data.dates
         vm.newAbsence = {userName:'-1',fromDate:'',toDate:'',reason:'-1',notes:'',halfDay:false}
@@ -182,7 +170,7 @@ export default {
     },
     getEmployees:function(){
       let vm = this;
-      axios.get(Constants.api + 'users/GetUsersForSelect')
+      ApiInterface.getEmployees()
       .then((res) => {
         vm.employees = res.data
       });

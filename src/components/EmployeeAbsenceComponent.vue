@@ -8,17 +8,17 @@
         <option value="-1" selected v-if="!showAllOption">Select Name</option>
         <option value="-1" selected v-if="showAllOption">Select All or Name</option>
         <option value="All" selected v-if="showAllOption">All</option>
-        <option v-for="e in employees" :value="e.UserName">{{e.FirstName}} {{e.Surname}}</option>
+        <option v-for="e in employees" :value="e.UserName" :key="e.UserName">{{e.FirstName}} {{e.Surname}}</option>
       </select>
 
       <label for="fromDate">From</label>
       <datepicker id="fromDate" format="dd/MM/yyyy" placeholder="From date" v-model="fromDate" class="datepicker-input"></datepicker>
-      <!-- <input type="text" placeholder="From date" v-model="newAbsence.fromDate"/> -->
+
       <label for="toDate">To</label>
       <datepicker id="toDate" format="dd/MM/yyyy" placeholder="To date" v-model="toDate" class="datepicker-input"></datepicker>
-      <br/>
+
       <button class="button" @click="submit()">Submit</button>
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
     </div>
 
     <div id="results" v-if="absences.length">
@@ -30,7 +30,7 @@
         {{formatJsDateForDisplay(fromDate)}} - {{formatJsDateForDisplay(toDate)}}
       </div>
 
-      <div v-for="a in absences" class="card absence-div">
+      <div v-for="a in absences" :key="a.AbsenceId" class="card absence-div">
         {{formatDateForDisplay(a.AbsenceDate)}}
         <a :href="'mailto:' + a.Email" v-if="userName == 'All'"> {{a.FirstName}} {{a.Surname}}</a> -
         {{a.Reason}}
@@ -55,6 +55,7 @@ import Constants from '@/components/helpers/Constants'
 import router from '../router/'
 import Datepicker from 'vuejs-datepicker'
 import Utilities from '@/components/helpers/Utilities'
+import ApiInterface from '@/apiInterface'
 
 export default {
   name: 'employee-absence',
@@ -75,11 +76,8 @@ export default {
   methods:{
     submit: function(){
       let vm = this;
-      let query = Constants.api + 'absences/GetAbsences?from=' + vm.formatDateForApi(vm.fromDate) +'&to=' + vm.formatDateForApi(vm.toDate)
-      if (vm.userName != "All"){
-        query += '&user=' + vm.userName
-      }
-      axios.get(query)
+      let employee = vm.userName != "All" ? vm.userName : null
+      ApiInterface.getAbsences(vm.fromDate,vm.toDate,employee)
       .then((res) => {
         vm.absences = res.data.sort((a,b) => {
           return new Date(a.AbsenceDate) - new Date(b.AbsenceDate);
@@ -95,13 +93,10 @@ export default {
     },
     getEmployees:function(){
       let vm = this;
-      axios.get(Constants.api + 'users/GetUsersForSelect')
+      ApiInterface.getEmployees()
       .then((res) => {
         vm.employees = res.data
       });
-    },
-    formatDateForApi:function(date){
-      return Utilities.formatDateForApi(date)
     },
     formatDateForDisplay:function(textDate){
       return Utilities.formatDateForDisplay(textDate)

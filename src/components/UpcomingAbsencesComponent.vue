@@ -6,7 +6,7 @@
       <div v-for="a in day.Absences" :key="a.AbsenceID">
         <div class="uc-details">
           {{a.FirstName}} {{a.Surname}}
-          <div class="uc-reason">({{a.Reason}}) {{a.HalfDay ? "HalfDay" : ""}} <i>{{a.Notes}}</i></div>
+          <div class="uc-reason"><span v-if="a.Notes"><i>({{a.Notes}})&nbsp;&nbsp;</i></span> {{a.Reason}} {{a.HalfDay ? "HalfDay" : ""}} </div>
         </div>
 
       </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import ApiInterface from '@/apiInterface'
 import Constants from '@/components/helpers/Constants'
 // import AbsenceCard from '@/components/AbsenceCardComponent'
 import router from '../router/'
@@ -43,8 +44,8 @@ export default {
       const numberOfDaysToAdd = 30;
       let end = new Date();
       end.setDate(end.getDate() + numberOfDaysToAdd);
-
-      axios.get(Constants.api + 'absences/GetAbsences?from=' + vm.formatDateForApi(today) + '&to=' + vm.formatDateForApi(end))
+      
+      ApiInterface.getAbsences(today,end)
       .then((res) => {
         let data = res.data
         const dates = [...new Set(data.map(item => item.AbsenceDate))];
@@ -54,12 +55,8 @@ export default {
           obj.AbsenceDate = item
           obj.Absences = data.filter(absence => absence.AbsenceDate === item)
           vm.upcomingAbsences.push(obj)
-          console.log('vm.upcomingAbsences',vm.upcomingAbsences)
         })
       });
-    },
-    formatDateForApi:function(date){
-      return Utilities.formatDateForApi(date)
     },
     formatDateForDisplay:function(textDate){
       return Utilities.formatDateForDisplay(textDate)
@@ -91,5 +88,6 @@ export default {
 .uc-reason {
   display:inline;
   float:right;
+  font-size:12px;
 }
 </style>

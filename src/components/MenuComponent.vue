@@ -68,7 +68,9 @@ export default {
 
 <style>
   .header {
-    width: 100%;
+    /*width: 100%;*/
+    min-width:320px;
+    max-width:430px;
     height: 44px;
     color: #FFF;
     background: #3F51B5;

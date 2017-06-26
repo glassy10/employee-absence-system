@@ -27,6 +27,12 @@ export default {
       const mm = month < 10 ? '0' + month : month;
       const y = date.getFullYear();
       return dd + '/'+ mm + '/'+ y;
+    },
+    getCookieValue: function (a) {
+      const b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+      return b ? b.pop() : '';
+    },
+    delete_cookie: function(name) {
+      document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
-
 }
