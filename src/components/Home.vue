@@ -1,12 +1,12 @@
 <template>
   <div class="home">
+    <transition name="slide-fade" appear >
+      <input-absence v-if="showInputAbsence"></input-absence>
 
-    <input-absence v-if="showInputAbsence"></input-absence>
+      <employee-absence v-if="showEmployeeAbsence" :showAllOption="true"></employee-absence>
 
-    <employee-absence v-if="showEmployeeAbsence" :showAllOption="true"></employee-absence>
-
-    <upcoming-absences v-if="showUpcomingAbsence"></upcoming-absences>
-
+      <upcoming-absences v-if="showUpcomingAbsence"></upcoming-absences>
+    </transition>
   </div>
 </template>
 
@@ -65,5 +65,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.home {
+  overflow-x: hidden;
+}
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active { transition: all .3s ease; }
+.slide-fade-leave-active { transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+.slide-fade-enter  { transform: translateX(400px); opacity: 0; }
+.slide-fade-leave-to  { transform: translateX(-400px); opacity: 0; }
+/* .slide-fade-leave-active for <2.1.8 */
 </style>

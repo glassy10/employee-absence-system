@@ -75,18 +75,17 @@ export default {
 <style scoped>
 
 .uc-date {
-  font-size: 13px;
-  font-weight:bold;
+  font-size: 16px;
   margin-bottom:3px;
   padding:2px 4px 2px 4px;
-  background:#dfdfdf;
+  background:#f3f3f3;
   border-bottom:1px solid #ddd;
 }
 .uc-details {
-  margin:0 4px 4px 8px;
+  margin:4px 4px 2px 6px;
 }
 .uc-reason {
-  display:inline;
+  /*display:inline;*/
   float:right;
   font-size:12px;
 }

@@ -94,7 +94,7 @@ body{
   max-width:430px;
   /*max-height:792px;*/
   width:100%;
-  /*height:100%;*/
+  height:100%;
   /*overflow:hidden;*/
   /*border-left:1px solid #ced7e6;
   border-right:1px solid #ced7e6;*/
@@ -112,8 +112,7 @@ html{
   .heading {
     padding: 12px 0 20px 0;
     margin: 0;
-    font-weight: bold;
-    font-size:16px;
+    font-size:26px;
     line-height:1.25em;
 
   }
@@ -250,10 +249,11 @@ html{
    border-top: 1px solid #ddd;
    border-left: 1px solid #ddd;
    border-right:1px solid #ddd;
+   border-bottom:1px solid #ddd;
    padding:0 0 4px 0;
    background-color:#fff;
    border-radius:0px;
-   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+   /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);*/
 
  }
 

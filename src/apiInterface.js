@@ -40,9 +40,7 @@ export default {
       )
     },
     login: (user) => {
-      console.log('user',user)
       return axios.post(Constants.api + 'users/login', user)
     }
-  
 
 }

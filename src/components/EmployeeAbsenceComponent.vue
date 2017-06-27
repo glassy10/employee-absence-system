@@ -18,7 +18,7 @@
       <datepicker id="toDate" format="dd/MM/yyyy" placeholder="To date" v-model="toDate" class="datepicker-input"></datepicker>
 
       <button class="button" @click="submit()">Submit</button>
-
+      <div style="margin-bottom:150px;">&nbsp;</div>
     </div>
 
     <div id="results" v-if="absences.length">

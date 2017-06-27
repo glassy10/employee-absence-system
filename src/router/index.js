@@ -36,10 +36,6 @@ export default new Router({
       name: 'Login',
       component: Login
     },
-    {
-      path: '/animtest/',
-      name: 'AnimTest',
-      component: AnimTest
-    }
+    
   ]
 })
